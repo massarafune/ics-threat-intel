@@ -14,7 +14,6 @@ app.post('/upload', (req, res) => {
     }
         // accessing the file
     const myFile = req.files.file;
-    console.log(req);
     //  mv() method places the file inside public directory
     myFile.mv(`${__dirname}/public/${myFile.name}`, function (err) {
         if (err) {
