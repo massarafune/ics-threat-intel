@@ -127,6 +127,7 @@ If you have npm errors when you run `npm install` or `npm start` or `npm run ser
 
 ```bash
 echo fs.inotify.max_user_watches= 65536 | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
 ```
 
 If you have some errors due to Node versions, you can install nvm (Node version manager) to switch Node easily  
