@@ -1,7 +1,7 @@
 # ics-threat-intel
 Threat intel platform for ICS
 
-This repo contains Vagrantfile and backend Nodejs API server.  
+This repo contains Vagrantfile and ELK configuration.  
 Vagrantfile automatically runs shell scripts to install ELK stack and Node.  
 
 Please note that this repo DOES NOT include React front end, which can be found in different repo.
@@ -25,14 +25,16 @@ vagrant ssh
 ## Install React App
 ```bash
 cd ~
-git clone https://github.com/mistersiddd/react-fileupload.git
-cd react-fileupload
+git clone https://github.com/massarafune/ICS-threat-hunting-reactapp.git
+cd ICS-threat-hunting-reactapp
 npm install
 npm start
 ```
-This will start React app which runs on port 3000
-
-You can access this web app from your Host computer (Windows/Mac/Linux) at http://192.168.33.30:3000 
+This will start React app.  
+But you can build this application to serve static files
+```bash
+npm run build
+```
 
 ## Configure ELK stack
 ### Elasticsearch
