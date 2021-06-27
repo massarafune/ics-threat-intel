@@ -1,14 +1,14 @@
 # ics-threat-intel
-Threat intel platform for ICS
+This is simple Proof of Concept repository. The main purpose is to build threat intel platform for ICS environment.  
 
 This repo contains Vagrantfile and ELK configuration.  
 Vagrantfile automatically runs shell scripts to install ELK stack and Node.  
 
-Please note that this repo DOES NOT include React front end, which can be found in different repo.
+Please note that this repo DOES NOT include React front end application, which can be found in different repo as well as signature based attack detection python script.  
 
 # Installation
 ## Install Virtual Box and Vagrant
-Make sure you meet prerequisites
+Make sure you have followings in your host machine, or use your *nix virtual machine:
 - Vagrant
 - VirtualBox
 
@@ -23,6 +23,7 @@ vagrant ssh
 ```
 
 ## Install React App
+In side the vagrant box/virtual machine run the followings to install web application
 ```bash
 cd ~
 git clone https://github.com/massarafune/ICS-threat-hunting-reactapp.git
@@ -31,10 +32,12 @@ npm install
 npm start
 ```
 This will start React app.  
-But you can build this application to serve static files
+But you can build this application to serve static files, which can be accessed via apache web server at port 80
 ```bash
 npm run build
 ```
+
+More detailed instruction can be found in the repository [https://github.com/massarafune/ICS-threat-hunting-reactapp.git](https://github.com/massarafune/ICS-threat-hunting-reactapp.git)  
 
 ## Configure ELK stack
 ### Elasticsearch
@@ -49,21 +52,9 @@ discovery.seed_hosts: ["127.0.0.1", "[::1]"]
 cluster.initial_master_nodes: ["node-1"]
 ```
 
-### Filebeat
-#### /etc/filebeat/filebeat.yml
-```
-- type: filestream
-    enabled: true
-    paths:
-        - /vagrant/Webapp/public/swat/*.csv
-```
-Note the path will be a directory where you save SWAT csv files
-
-Other than the above, keep all default
-
 ### Kibana
 You need to install Kibana separately because Kibana itself is not necessary module for the purpose of research.  
-However you can use Kibana for debuging or simply query data in a simple way.  
+It is not required to install and use Kibana for this project but it can be useful to review data in ElasticSearch.  
 
 #### Install Kibana
 ```bash
@@ -102,22 +93,17 @@ sudo systemctl start filebeat
 sudo systemctl enable logstash
 # sudo systemctl start logstash
 
-# configure Node backend
-cd /vagrant/WebApp
-npm install
-npm run server
 ```
 
 Keep in mind that ELK stack requires some time to boot up (around a couple of minutes to fully functional)  
 
 ## Services and ports
-| Service | Port | Accessible from Host? |
-----|----|----
-| Elasticsearch | 9200 | False |
-| Kibana | 5601 | True |
-| Logstash | 9600 | False |
-| Node API | 4500 | True |
-| React | 3000 | True |
+| Service | Port |
+----|----
+| Elasticsearch | 9200 | 
+| Kibana | 5601 |
+| Logstash | 9600 |
+
 
 Everytime you restart/boot machine, you need to start Node and React manually, but ELK will start automatically
 
